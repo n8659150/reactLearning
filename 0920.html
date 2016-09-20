@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script> 
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel"> 
+    //browser.min.js 若使用6.XX.XX版本，报cannot read property “keys”，5.XX版本正常
+      var ClickMe = React.createClass({
+        getInitialState: function(){
+          return {count:0} //getIntitalState返回的是键值对
+        },
+        handleClick: function(){
+          //需使用setState方法来更新初始化方法中设定的值，若直接更改this.state.count，需使用forceUpdate方法强制更新
+          this.setState( 
+          //在this.setState方法中使用this.state.count来更新数值是可以的
+            {count:this.state.count + 1} 
+          )
+        },
+        //render方法可以返回一段html代码，需要包裹在圆括号中
+        render: function(){
+        return (
+          //render方法中返回的所有html代码需包裹在一个父级元素中，通常是div元素，否则无法渲染
+          <div> 
+            <h2>点击下面的按钮！</h2>
+            //onClick事件通过{this.方法名}来绑定
+            <button onClick={this.handleClick}>点击我</button>
+            //组件的属性通过this.state.属性名来访问，如需渲染，需要包含在中括号中
+            <p>您一共点击了{this.state.count}次</p>
+          </div>
+          );
+        }
+        
+      })
+      var clickComponent = ReactDOM.render(
+        <ClickMe />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
